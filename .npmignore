@@ -1,0 +1,7 @@
+src/
+test/
+examples/
+.gitignore
+tsconfig.json
+*.tgz
+bun.lockb

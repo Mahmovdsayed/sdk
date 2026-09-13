@@ -1,0 +1,69 @@
+{
+  "name": "@hirely/sdk",
+  "version": "0.1.0",
+  "description": "Official JavaScript and TypeScript SDK for Hirely — the AI-powered career accelerator. Fetch your portfolio data in any framework: Next.js, Astro, Remix, Node.js, Bun, Deno, and the browser.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "test": "bun test",
+    "clean": "rm -rf dist",
+    "prepublishOnly": "bun run clean && bun run typecheck && bun run build && bun test"
+  },
+  "keywords": [
+    "hirely",
+    "sdk",
+    "portfolio",
+    "typescript",
+    "javascript",
+    "api",
+    "client",
+    "nextjs",
+    "react",
+    "astro",
+    "remix",
+    "freelancer",
+    "career",
+    "ai"
+  ],
+  "author": {
+    "name": "Hirely",
+    "url": "https://hirely.cc"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hirely/sdk.git"
+  },
+  "homepage": "https://hirely.cc",
+  "bugs": {
+    "url": "https://github.com/hirely/sdk/issues"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "sideEffects": false,
+  "devDependencies": {
+    "@types/bun": "latest",
+    "typescript": "^7.0.2"
+  }
+}

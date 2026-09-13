@@ -1,0 +1,32 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# OS / Editor
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Test coverage
+coverage/
+test/
+
+# Bun lockfile (commit this if you want reproducible installs)
+# bun.lockb
+
+# Logs
+*.log
+npm-debug.log*
+bun-error.log*
+
+# Pack output
+*.tgz
