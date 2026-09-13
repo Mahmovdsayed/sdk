@@ -1,5 +1,5 @@
 /** @internal Base URL for the Hirely public API. Not configurable by consumers. */
-export const BASE_URL = "https://hirely.cc/api/v1/sdk" as const;
+export const BASE_URL = "https://api.hirely.cc/api/v1/sdk" as const;
 
 /** @internal Required prefix for all Hirely public API keys. */
 export const API_KEY_PREFIX = "hk_pub_" as const;
