@@ -5,6 +5,7 @@ interface CacheEntry<T> {
   expiresAt: number;
 }
 
+/** @internal */
 export class MemoryCache implements HirelyCache {
   private readonly store = new Map<string, CacheEntry<unknown>>();
 

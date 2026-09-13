@@ -7,12 +7,7 @@ import {
   HirelyTimeoutError,
   HirelyServerError,
 } from "../errors.js";
-import type {
-  HirelyApiResponse,
-  HirelyCache,
-  HirelyCacheConfig,
-  HirelyRequestOptions,
-} from "../types.js";
+import type { HirelyApiResponse, HirelyCache, HirelyCacheConfig, HirelyRequestOptions } from "../types.js";
 import { MemoryCache } from "../cache/memory-cache.js";
 import {
   BASE_URL,
@@ -22,6 +17,7 @@ import {
   MAX_BACKOFF_MS,
 } from "../constants.js";
 
+/** @internal */
 export interface RequestClientConfig {
   apiKey: string;
   timeout: number;
@@ -30,6 +26,7 @@ export interface RequestClientConfig {
   cacheConfig?: HirelyCacheConfig;
 }
 
+/** @internal */
 export class RequestClient {
   private readonly apiKey: string;
   private readonly timeout: number;
@@ -51,16 +48,11 @@ export class RequestClient {
   }
 
   private buildCacheKey(endpoint: string): string {
-    
-    
     const keyScope = this.apiKey.slice(-8);
     return `${keyScope}:${BASE_URL}${endpoint}`;
   }
 
-  private async fetchWithTimeout(
-    url: string,
-    init: RequestInit,
-  ): Promise<Response> {
+  private async fetchWithTimeout(url: string, init: RequestInit): Promise<Response> {
     if (this.timeout === 0) {
       return this.fetchFn(url, init);
     }
@@ -72,9 +64,7 @@ export class RequestClient {
       return await this.fetchFn(url, { ...init, signal: controller.signal });
     } catch (error) {
       if (error instanceof Error && error.name === "AbortError") {
-        throw new HirelyTimeoutError(
-          `Request timed out after ${this.timeout}ms`,
-        );
+        throw new HirelyTimeoutError(`Request timed out after ${this.timeout}ms`);
       }
       throw error;
     } finally {
@@ -82,11 +72,7 @@ export class RequestClient {
     }
   }
 
-  private throwForStatus(
-    status: number,
-    message: string,
-    requestId?: string,
-  ): never {
+  private throwForStatus(status: number, message: string, requestId?: string): never {
     switch (true) {
       case status === 401 || status === 403:
         throw new HirelyAuthenticationError(message, status, requestId);
@@ -121,14 +107,10 @@ export class RequestClient {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
-  async request<T>(
-    endpoint: string,
-    options?: HirelyRequestOptions,
-  ): Promise<T> {
+  async request<T>(endpoint: string, options?: HirelyRequestOptions): Promise<T> {
     const bypassCache = options?.cache === false;
     const cacheKey = this.buildCacheKey(endpoint);
 
-    
     if (this.cache && !bypassCache) {
       const cached = await this.cache.get<T>(cacheKey);
       if (cached !== undefined) return cached;
@@ -149,10 +131,8 @@ export class RequestClient {
       try {
         response = await this.fetchWithTimeout(url, { method: "GET", headers });
       } catch (error) {
-        
         if (error instanceof HirelyTimeoutError) throw error;
 
-        
         lastError = error;
         if (attempt < this.retries) {
           await this.sleep(this.computeBackoff(attempt));
@@ -167,31 +147,21 @@ export class RequestClient {
 
       const requestId = response.headers.get("x-request-id") ?? undefined;
 
-      
       if (response.status === 429 && attempt < this.retries) {
         const retryAfter = this.getRetryAfter(response.headers);
         await this.sleep(this.computeBackoff(attempt, retryAfter));
         continue;
       }
 
-      
-      if (
-        RETRYABLE_STATUS_CODES.has(response.status) &&
-        response.status !== 429 &&
-        attempt < this.retries
-      ) {
+      if (RETRYABLE_STATUS_CODES.has(response.status) && response.status !== 429 && attempt < this.retries) {
         await this.sleep(this.computeBackoff(attempt));
         continue;
       }
 
-      
       let body: HirelyApiResponse<T> | undefined;
       try {
         body = (await response.json()) as HirelyApiResponse<T>;
       } catch {
-        
-        
-        
         if (!response.ok) {
           this.throwForStatus(response.status, "Request failed", requestId);
         }
@@ -203,7 +173,6 @@ export class RequestClient {
         );
       }
 
-      
       if (!response.ok || !body.success) {
         this.throwForStatus(
           response.status,
@@ -214,7 +183,6 @@ export class RequestClient {
 
       const data = body.data;
 
-      
       if (this.cache && !bypassCache) {
         await this.cache.set(cacheKey, data, this.cacheTtl);
       }
@@ -222,10 +190,6 @@ export class RequestClient {
       return data;
     }
 
-    
-    throw (
-      lastError ??
-      new HirelyError("Request failed after retries", 0, "REQUEST_FAILED")
-    );
+    throw lastError ?? new HirelyError("Request failed after retries", 0, "REQUEST_FAILED");
   }
 }

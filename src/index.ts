@@ -1,3 +1,20 @@
+/**
+ * @hirely/sdk — Official JavaScript & TypeScript SDK for Hirely.
+ *
+ * @example
+ * ```ts
+ * import Hirely from "@hirely/sdk";
+ *
+ * const hirely = new Hirely({ apiKey: process.env.HIRELY_API_KEY! });
+ *
+ * const portfolio = await hirely.get();
+ * const me        = await hirely.me();
+ * const project   = await hirely.projects.getBySlug("my-app");
+ * ```
+ *
+ * @module
+ */
+
 export { default } from "./client.js";
 export { default as Hirely } from "./client.js";
 
@@ -12,12 +29,10 @@ export {
 } from "./errors.js";
 
 export type {
-  
   HirelyConfig,
   HirelyCacheConfig,
   HirelyCache,
   HirelyRequestOptions,
-  
   HirelyPortfolio,
   HirelyMe,
   HirelyProfile,
@@ -34,7 +49,6 @@ export type {
   HirelyContact,
   HirелySocialLink,
   HirelyCV,
-  HirelyApiResponse,
 } from "./types.js";
 
 export type { ProjectsResource } from "./resources/projects.js";

@@ -1,17 +1,26 @@
 {
   "name": "@hirely/sdk",
-  "version": "0.1.0",
-  "description": "Official JavaScript and TypeScript SDK for Hirely — the AI-powered career accelerator. Fetch your portfolio data in any framework: Next.js, Astro, Remix, Node.js, Bun, Deno, and the browser.",
+  "version": "1.0.0",
+  "description": "Official JavaScript and TypeScript SDK for connecting your Hirely portfolio to any website or application.",
   "type": "module",
+  "exports": {
+    ".": {
+      "bun": {
+        "types": "./dist/index.d.ts",
+        "import": "./dist/index.js"
+      },
+      "node": {
+        "types": "./dist/index.d.ts",
+        "import": "./dist/index.js"
+      },
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    }
-  },
   "files": [
     "dist",
     "README.md",
@@ -19,11 +28,16 @@
     "CHANGELOG.md"
   ],
   "scripts": {
-    "build": "tsc",
-    "typecheck": "tsc --noEmit",
+    "build:js": "bun build src/index.ts --outdir dist --target node --format esm --minify",
+    "build:types": "tsc -p tsconfig.build.json",
+    "build": "bun scripts/build.ts",
+    "typecheck": "bunx tsgo --noEmit",
     "test": "bun test",
     "clean": "rm -rf dist",
-    "prepublishOnly": "bun run clean && bun run typecheck && bun run build && bun test"
+    "prepublishOnly": "bun run clean && bun run typecheck && bun run build && bun test",
+    "release:patch": "npm version patch && git push --follow-tags && npm publish",
+    "release:minor": "npm version minor && git push --follow-tags && npm publish",
+    "release:major": "npm version major && git push --follow-tags && npm publish"
   },
   "keywords": [
     "hirely",
@@ -55,15 +69,16 @@
     "url": "https://github.com/hirely/sdk/issues"
   },
   "publishConfig": {
-    "access": "public",
-    "provenance": true
+    "access": "public"
   },
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=20.0.0",
+    "bun": ">=1.4.0"
   },
   "sideEffects": false,
   "devDependencies": {
     "@types/bun": "latest",
+    "@typescript/native-preview": "latest",
     "typescript": "^7.0.2"
   }
 }

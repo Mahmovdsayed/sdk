@@ -17,19 +17,16 @@
 
 ### The platform at a glance
 
-**🤖 AI-First career management**
+**AI-First career management**
 Hirely's AI doesn't just store your data — it actively coaches you. It analyzes your skill matrix, identifies knowledge gaps, generates tailored CVs for specific job descriptions, scores your resume against ATS systems, and synthesizes your experience into compelling recruiter-ready biographies. An integrated conversational AI agent lets you build and update your entire profile through natural chat.
 
-**🔍 Semantic professional discovery**
+**Semantic professional discovery**
 Hirely moves beyond keyword matching. Using Google Gemini vector embeddings, the platform understands the true intent behind searches — matching freelancers to clients based on deep contextual similarity, not just exact keyword overlap.
 
-**🌐 Custom domain branding (Pro)**
-Pro freelancers can connect their own domain (e.g. `mahmoud.dev`) directly to their Hirely portfolio. The platform handles DNS verification, Vercel edge routing, and seamless URL rewrites — so visitors always see your domain, not `hirely.cc`.
-
-**🔗 Third-party integrations**
+**Third-party integrations**
 Connect GitHub to auto-import projects from public repositories (AI-generated descriptions, skill extraction, verified developer badge). Connect Spotify to display a live "Now Playing" widget on your public portfolio. LinkedIn, Discord, Figma, and Notion integrations are on the roadmap.
 
-**🏢 Enterprise-grade infrastructure**
+**Enterprise-grade infrastructure**
 Built for scale: Redis SWR caching, background job queues, real-time AI quota management, cryptographic webhook verification, and GDPR/CCPA/EU AI Act compliance — including permanent Right to be Forgotten workflows and data portability exports.
 
 ### How the SDK fits in
