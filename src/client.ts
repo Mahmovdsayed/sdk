@@ -148,12 +148,12 @@ export default class Hirely {
     }
 
     this.http = new RequestClient({
-      apiKey: config.apiKey,
-      timeout: config.timeout ?? DEFAULT_TIMEOUT_MS,
-      retries: config.retries ?? DEFAULT_RETRIES,
-      fetchFn: config.fetch ?? globalThis.fetch.bind(globalThis),
-      cacheConfig: config.cache,
-    });
+  apiKey: config.apiKey,
+  timeout: config.timeout ?? DEFAULT_TIMEOUT_MS,
+  retries: config.retries ?? DEFAULT_RETRIES,
+  fetchFn: config.fetch ?? globalThis.fetch.bind(globalThis),
+  cacheConfig: config.cache,   // ← can be `undefined`
+});
 
     this.projects = createProjectsResource(this.http);
     this.work = createWorkResource(this.http);

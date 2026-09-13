@@ -15,8 +15,7 @@
  * @module
  */
 
-export { default } from "./client.js";
-export { default as Hirely } from "./client.js";
+export { default, default as Hirely } from "./client.js";
 
 export {
   HirelyError,
@@ -47,7 +46,7 @@ export type {
   HirelyTestimonialClient,
   HirelyFaq,
   HirelyContact,
-  HirелySocialLink,
+  HirelySocialLink,
   HirelyCV,
 } from "./types.js";
 

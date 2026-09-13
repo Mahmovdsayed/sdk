@@ -28,13 +28,12 @@
     "CHANGELOG.md"
   ],
   "scripts": {
-    "build:js": "bun build src/index.ts --outdir dist --target node --format esm --minify",
-    "build:types": "tsc -p tsconfig.build.json",
     "build": "bun scripts/build.ts",
     "typecheck": "bunx tsgo --noEmit",
     "test": "bun test",
+    "smoke": "bun scripts/smoke.ts",
     "clean": "rm -rf dist",
-    "prepublishOnly": "bun run clean && bun run typecheck && bun run build && bun test",
+    "prepublishOnly": "bun run clean && bun run typecheck && bun run build && bun run smoke && bun test",
     "release:patch": "npm version patch && git push --follow-tags && npm publish",
     "release:minor": "npm version minor && git push --follow-tags && npm publish",
     "release:major": "npm version major && git push --follow-tags && npm publish"

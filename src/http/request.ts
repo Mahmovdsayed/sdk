@@ -23,7 +23,7 @@ export interface RequestClientConfig {
   timeout: number;
   retries: number;
   fetchFn: typeof fetch;
-  cacheConfig?: HirelyCacheConfig;
+  cacheConfig?: HirelyCacheConfig | undefined;
 }
 
 /** @internal */

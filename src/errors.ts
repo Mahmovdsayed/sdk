@@ -15,14 +15,16 @@
  * ```
  */
 export class HirelyError extends Error {
-  /** HTTP status code (0 for network/timeout errors). */
   readonly status: number;
-  /** Machine-readable error code. */
   readonly code: string;
-  /** The request ID from the server, if available. */
-  readonly requestId?: string;
+  readonly requestId: string | undefined;
 
-  constructor(message: string, status: number, code = "HIRELY_ERROR", requestId?: string) {
+  constructor(
+    message: string,
+    status: number,
+    code = "HIRELY_ERROR",
+    requestId?: string,
+  ) {
     super(message);
     this.name = "HirelyError";
     this.status = status;
@@ -49,7 +51,11 @@ export class HirelyError extends Error {
  * ```
  */
 export class HirelyAuthenticationError extends HirelyError {
-  constructor(message = "Invalid or missing API key", status = 401, requestId?: string) {
+  constructor(
+    message = "Invalid or missing API key",
+    status = 401,
+    requestId?: string,
+  ) {
     super(message, status, "AUTHENTICATION_ERROR", requestId);
     this.name = "HirelyAuthenticationError";
   }
@@ -105,10 +111,13 @@ export class HirelyValidationError extends HirelyError {
  * ```
  */
 export class HirelyRateLimitError extends HirelyError {
-  /** Seconds until the rate limit resets (from `Retry-After` header). */
-  readonly retryAfter?: number;
+  readonly retryAfter: number | undefined; // ← was `?: number`
 
-  constructor(message = "Rate limit exceeded", retryAfter?: number, requestId?: string) {
+  constructor(
+    message = "Rate limit exceeded",
+    retryAfter?: number,
+    requestId?: string,
+  ) {
     super(message, 429, "RATE_LIMIT_EXCEEDED", requestId);
     this.name = "HirelyRateLimitError";
     this.retryAfter = retryAfter;
@@ -142,7 +151,11 @@ export class HirelyTimeoutError extends HirelyError {
  * Thrown when the Hirely API returns a server-side error (HTTP 5xx).
  */
 export class HirelyServerError extends HirelyError {
-  constructor(message = "Internal server error", status = 500, requestId?: string) {
+  constructor(
+    message = "Internal server error",
+    status = 500,
+    requestId?: string,
+  ) {
     super(message, status, "SERVER_ERROR", requestId);
     this.name = "HirelyServerError";
   }

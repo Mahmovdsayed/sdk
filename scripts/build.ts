@@ -11,7 +11,11 @@ const js = await Bun.build({
   outdir: "dist",
   target: "node",
   format: "esm",
-  minify: true,
+  minify: {
+    identifiers: false,
+    syntax: true,
+    whitespace: true,
+  },
   splitting: false,
   sourcemap: "none",
   define: {

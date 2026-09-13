@@ -444,11 +444,11 @@ export interface HirelyContact {
   /** MongoDB document ID. */
   _id: string;
   /** List of social/contact links. */
-  socialLinks?: HirелySocialLink[];
+  socialLinks?: HirelySocialLink[];
 }
 
 /** A single social or contact link. */
-export interface HirелySocialLink {
+export interface HirelySocialLink {
   /** Social platform name (e.g. "github", "linkedIn"). */
   platform: string;
   /** The profile URL. */
