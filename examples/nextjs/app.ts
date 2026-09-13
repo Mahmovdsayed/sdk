@@ -1,4 +1,4 @@
-import Hirely from "../../src/index.js";
+import Hirely from "@hirely/sdk";
 
 const hirely = new Hirely({
   apiKey: process.env.HIRELY_API_KEY!,

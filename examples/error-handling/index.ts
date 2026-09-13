@@ -5,7 +5,7 @@ import Hirely, {
   HirelyRateLimitError,
   HirelyTimeoutError,
   HirelyServerError,
-} from "../../src/index.js";
+} from "@hirely/sdk";
 
 const hirely = new Hirely({
   apiKey: process.env.HIRELY_API_KEY!,
@@ -24,7 +24,9 @@ try {
   } else if (error instanceof HirelyNotFoundError) {
     console.error("❌ Resource not found.");
   } else if (error instanceof HirelyRateLimitError) {
-    console.error(`⏱  Rate limited. Retry in ${error.retryAfter ?? "unknown"}s`);
+    console.error(
+      `⏱  Rate limited. Retry in ${error.retryAfter ?? "unknown"}s`,
+    );
   } else if (error instanceof HirelyTimeoutError) {
     console.error("⏳ Request timed out.");
   } else if (error instanceof HirelyServerError) {
